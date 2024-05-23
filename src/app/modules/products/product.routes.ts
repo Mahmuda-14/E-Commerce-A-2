@@ -10,3 +10,6 @@ router.get('/api/products', ProductControllers.getAllProducts);
 router.get('/api/products/:productId', ProductControllers.getSingleProduct);
 
 export const ProductRoutes = router;
+
+
+// kkkkk
