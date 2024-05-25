@@ -34,7 +34,43 @@ const getAllOrder = async (req: Request, res: Response) => {
 
 
 
+
+
+const getSearchOrder = async (req: Request, res: Response) => {
+  try {
+   
+    const searchTerm= req.query?.email 
+    // console.log(searchTerm);
+
+ 
+    const result = await OrderServices.getSearchOrderFromDB(searchTerm);
+
+    
+
+    res.status(200).json({
+      success: true,
+      message: `Products matching search term  fetched successfully!`,
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: 'An error occurred while searching for products.',
+      data: null,
+    });
+  }
+};
+
+
+
+
+
+
+
+
 export const OrderControllers = {
   createOrder,
   getAllOrder,
+  getSearchOrder
 };
