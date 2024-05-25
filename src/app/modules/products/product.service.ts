@@ -21,14 +21,12 @@ const getSingleProductFromDB = async (id: string) => {
 };
 
 const getSearchProductFromDB = async (searchTerm: any) => {
-  const regex = new RegExp(searchTerm, 'i');
 
-  console.log('hello', regex);
-
-  const products = await ProductModel.find({
-    $or: [{ name: { $regex: searchTerm, $options: 'i' } }],
-  });
-
+  const query = {
+    name: { $regex: searchTerm, $options: 'i' },
+  };
+// console.log(query);
+  const products = await ProductModel.find(query);
   return products;
 };
 
