@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 import { OrderServices } from './order.service';
 
-
-
 const createOrder = async (req: Request, res: Response) => {
   const { order: orderData } = req.body;
 
@@ -17,8 +15,6 @@ const createOrder = async (req: Request, res: Response) => {
   });
 };
 
-
-
 const getAllOrder = async (req: Request, res: Response) => {
   const result = await OrderServices.getAllOrderFromDB();
 
@@ -32,24 +28,16 @@ const getAllOrder = async (req: Request, res: Response) => {
 };
 
 
-
-
-
-
 const getSearchOrder = async (req: Request, res: Response) => {
   try {
-   
-    const searchTerm= req.query?.email 
+    const searchTerm = req.query?.email;
     // console.log(searchTerm);
 
- 
     const result = await OrderServices.getSearchOrderFromDB(searchTerm);
-
-    
 
     res.status(200).json({
       success: true,
-      message: `Products matching search term  fetched successfully!`,
+      message: `Orders fetched successfully!`,
       data: result,
     });
   } catch (err) {
@@ -62,15 +50,8 @@ const getSearchOrder = async (req: Request, res: Response) => {
   }
 };
 
-
-
-
-
-
-
-
 export const OrderControllers = {
   createOrder,
   getAllOrder,
-  getSearchOrder
+  getSearchOrder,
 };

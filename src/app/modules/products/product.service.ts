@@ -1,3 +1,4 @@
+import mongoose, { ObjectId } from 'mongoose';
 import { Product } from './product.interface';
 import { ProductModel } from './product.model';
 
@@ -9,59 +10,93 @@ const createProductIntoDB = async (productData: Product) => {
   return result;
 };
 
+
+
+
+
 // get data
 const getAllProductsFromDB = async () => {
-  
   const result = await ProductModel.find();
   return result;
 };
+
+
+
+
 
 const getSingleProductFromDB = async (id: string) => {
   const result = await ProductModel.findOne({ id });
   return result;
 };
 
-const getSearchProductFromDB = async (searchTerm: any) => {
 
+
+
+
+
+const getSearchProductFromDB = async (searchTerm: any) => {
   const query = {
     name: { $regex: searchTerm, $options: 'i' },
   };
-// console.log(query);
+  // console.log(query);
   const products = await ProductModel.find(query);
   return products;
 };
 
+
+
+
+
+
+
+
 const deleteProduct = async (id: string) => {
+  // console.log("deleted",id);
   const result = await ProductModel.deleteOne({ id });
+  // console.log(result);
   return result;
 };
 
-// const singleProductUpdate = async (id: string, updateData: any) => {
-//   const result = await ProductModel.findOneAndUpdate(
-//     { _id: id },
-//     { $set: updateData },
-//     { new: true }
-//   );
 
-//   if (result) {
-//     return {
-//       success: true,
-//       message: 'Product updated successfully!',
-//       data: result
-//     };
-//   } else {
-//     return {
-//       success: false,
-//       message: 'Product not found!',
-//       data: null
-//     };
-//   }
-// };
+
+
+
+
+
+
+
+const singleProductUpdate = async (id: string, Data: Product) => {
+  console.log('update id', id);
+  const result = await ProductModel.findByIdAndUpdate(
+    id,
+
+    {
+      $set: {
+        name: Data?.name,
+        description: Data?.description,
+        price: Data?.price,
+        category: Data?.category,
+        tags: Data?.tags,
+        variants: Data?.variants,
+        inventory: Data?.inventory,
+      },
+    },
+    { upsert: true },
+   
+  );
+
+  // console.log('Update result:', result);
+};
+
+
+
+
 
 export const ProductServices = {
   createProductIntoDB,
   getAllProductsFromDB,
   getSingleProductFromDB,
+  singleProductUpdate,
   getSearchProductFromDB,
   deleteProduct,
 };
