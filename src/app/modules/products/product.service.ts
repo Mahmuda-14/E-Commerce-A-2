@@ -1,4 +1,3 @@
-import mongoose, { ObjectId } from 'mongoose';
 import { Product } from './product.interface';
 import { ProductModel } from './product.model';
 
@@ -34,7 +33,7 @@ const getSingleProductFromDB = async (id: string) => {
 
 
 
-const getSearchProductFromDB = async (searchTerm: any) => {
+const getSearchProductFromDB = async (searchTerm: string) => {
   const query = {
     name: { $regex: searchTerm, $options: 'i' },
   };
@@ -66,7 +65,7 @@ const deleteProduct = async (id: string) => {
 
 
 const singleProductUpdate = async (id: string, Data: Product) => {
-  console.log('update id', id);
+  // console.log('update id', id);
   const result = await ProductModel.findByIdAndUpdate(
     id,
 
@@ -84,8 +83,10 @@ const singleProductUpdate = async (id: string, Data: Product) => {
     { upsert: true },
    
   );
-
   // console.log('Update result:', result);
+  return result;
+
+  
 };
 
 

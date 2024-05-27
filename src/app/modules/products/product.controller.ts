@@ -52,7 +52,7 @@ const getSingleProduct = async (req: Request, res: Response) => {
 
 const getSearchProduct = async (req: Request, res: Response) => {
   try {
-    const searchTerm = req.query.searchTerm;
+    const searchTerm = req.query.searchTerm as string;
 
     // console.log(searchTerm);
 
@@ -78,8 +78,9 @@ const getDelete = async (req: Request, res: Response) => {
   try {
     const { studentId } = req.params;
 
-    const result = await ProductServices.deleteProduct(studentId);
+   await ProductServices.deleteProduct(studentId);
 
+  
     res.status(200).json({
       success: true,
       message: 'Product deleted successfully!',
@@ -88,6 +89,8 @@ const getDelete = async (req: Request, res: Response) => {
   } catch (err) {
     console.log(err);
   }
+
+
 };
 
 

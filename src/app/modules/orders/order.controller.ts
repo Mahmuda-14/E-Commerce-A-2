@@ -30,7 +30,7 @@ const getAllOrder = async (req: Request, res: Response) => {
 
 const getSearchOrder = async (req: Request, res: Response) => {
   try {
-    const searchTerm = req.query?.email;
+    const searchTerm = req.query?.email as string;
     // console.log(searchTerm);
 
     const result = await OrderServices.getSearchOrderFromDB(searchTerm);
